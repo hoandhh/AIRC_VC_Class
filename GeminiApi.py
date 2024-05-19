@@ -88,9 +88,10 @@ with open("output.csv", "r") as file:
         
         response = chat_session.send_message(question)
         print(response.text)
-        with open("response.txt", "a") as file:
-            lines = [line.strip() for line in response.text.splitlines()]
-            # Lọc ra các dòng không trống 
-            non_empty_lines = [line for line in lines if line]
-            for line in non_empty_lines:
-                file.write(line + "\n")
+        # with open("response.txt", "a") as file:
+        #     lines = [line.strip() for line in response.text.splitlines()]
+        #     # Lọc ra các dòng không trống 
+        #     non_empty_lines = [line for line in lines if line]
+        #     for line in non_empty_lines:
+        #         file.write(line + "\n")
+        
