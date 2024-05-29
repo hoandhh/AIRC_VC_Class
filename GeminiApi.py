@@ -76,22 +76,19 @@ def remove_text_before_colon(input_file, output_file):
                 writer.writerow(cleaned_row)
 
 # Sử dụng hàm
-remove_text_before_colon('runs/detect/exp/predictions.csv', 'output.csv')
+remove_text_before_colon('runs/detect/exp2/predictions.csv', 'output.csv')
 
 with open("output.csv", "r") as file:
     lines = file.readlines()
     print(len(lines))
     for i in range(0, len(lines), 5):
-        message = "Hãy sinh ra 1 câu có dạng : Hiện tại lớp học đang có {nhãn} bạn đang {nhãn} và 1 câu nhận xét duy nhất dựa trên dòng cuối đoạn dữ liệu sau :"
+        message = "Vấn đề: Dữ liệu đầu vào là các nhãn mà yolo nhận diện được, mỗi dòng dữ liệu tương ứng với các nhãn tìm thấy trong 1 frame. Nếu trong các dòng dữ liệu nhận vào, có dòng nào có dữ liệu bất thường với các dòng khác thì lấy ra dòng đó để thực hiện yêu cầu.Lưu ý: Dữ liệu vào là độc lập, không liên quan đến dữ liệu đã nhập ở lần request trước.Yêu cầu: Sinh ra 1 câu có dạng: Hiện tại {thời gian} đang có {nhãn} người đang {nhãn} và 1 câu nhận xét duy nhất.Dữ liệu:"
+
         question = message +"".join(lines[i:i+5])
         # print(question)
         
         response = chat_session.send_message(question)
         print(response.text)
-        # with open("response.txt", "a") as file:
-        #     lines = [line.strip() for line in response.text.splitlines()]
-        #     # Lọc ra các dòng không trống 
-        #     non_empty_lines = [line for line in lines if line]
-        #     for line in non_empty_lines:
-        #         file.write(line + "\n")
+        with open("response.txt", "a") as file:
+            file.write(response.text + "\n")
         

@@ -34,7 +34,7 @@ import os
 import platform
 import sys
 from pathlib import Path
-
+import time
 import torch
 
 FILE = Path(__file__).resolve()
@@ -197,8 +197,12 @@ def run(
                 # Print results
                 for c in det[:, 5].unique():
                     n = (det[:, 5] == c).sum()  # detections per class
-                    s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
-                write_to_csv(s)
+                    s += f"{n} {names[int(c)]}{'s' * (n > 1)}, " 
+                    timestamp = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()) # add to string
+                    output_result = s + timestamp
+                    cleaned_row = [cell.split(':', 1)[-1].strip() if ':' in cell else cell for cell in row]
+
+                    write_to_csv(s + timestamp) 
 
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
